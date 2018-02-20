@@ -1,0 +1,50 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+lint:
+  name: yamllint
+platforms:
+  - name: ubuntu
+    box: bento/ubuntu-16.04
+    groups:
+      - linux
+
+  - name: centos
+    box: bento/centos-7.4
+    groups:
+      - linux
+
+  - name: vagrant-10
+    box: windows-10-iot-ru-chef12
+    memory: 2048
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      vagrant-10:
+        ansible_become: false
+        ansible_user: vagrant
+        ansible_password: vagrant
+        ansible_port: 5985
+        ansible_host: 127.0.0.1
+        ansible_connection: winrm
+        ansible_winrm_scheme: http
+        ansible_winrm_server_cert_validation: ignore
+    group_vars:
+      linux:
+        ansible_become: true
+  lint:
+    name: ansible-lint
+scenario:
+  name: default
+  converge_sequence:
+    - create
+    - converge
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

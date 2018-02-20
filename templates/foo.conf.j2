@@ -1,0 +1,13 @@
+######################
+# Configuration file
+######################
+
+{% if ansible_distribution == 'Ubuntu' %}
+path = /etc/foo.conf
+{% elif ansible_distribution == 'CentOS' %}
+path = /opt/foo.conf
+{% elif ansible_os_family == 'Windows' and ansible_distribution_major_version == '10' %}
+path = C:\Program Files\foo\foo.conf
+{% elif ansible_os_family == 'Windows' and ansible_distribution_major_version == '6.3' %}
+path = C:\foo\foo.conf
+{% endif %}

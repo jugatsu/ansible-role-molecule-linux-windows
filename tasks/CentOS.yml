@@ -1,0 +1,8 @@
+---
+# tasks file for ansible-role-molecule-linux-windows
+
+- name: Ensure configuration file is present
+  template:
+    src: foo.conf.j2
+    dest: /opt/foo.conf
+  notify: restart foo

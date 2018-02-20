@@ -1,0 +1,20 @@
+---
+# handlers file for ansible-role-molecule-linux-windows
+
+- name: restart foo
+  service:
+    name: cron
+    state: restarted
+  when: ansible_distribution == 'Ubuntu'
+
+- name: restart foo
+  service:
+    name: crond
+    state: restarted
+  when: ansible_distribution == 'CentOS'
+
+- name: restart foo
+  win_service:
+    name: spooler
+    state: restarted
+  when: ansible_os_family == 'Windows'
